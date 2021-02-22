@@ -1,7 +1,7 @@
 from django.urls import reverse
 from django.urls import resolve
 from django.test import TestCase
-from .views import home, board_topics
+from .views import home, board_topics, new_topic
 from .models import Board
 
 class HomeTests(TestCase):
@@ -46,7 +46,7 @@ class BoardTopicsTests(TestCase):
          homepage_url = reverse('home')
          self.assertContains(response, 'href="{0}"'.format(homepage_url))
 
- class NewTopicTests(TestCase):
+class NewTopicTests(TestCase):
     def setUp(self):
         Board.objects.create(name='Django', description='Django board.')
 
