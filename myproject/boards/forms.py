@@ -1,5 +1,5 @@
 from django import forms
-from .models import Topic
+from .models import Post
 
 class NewTopicForm(forms.ModelForm):
     message = forms.CharField(
@@ -8,6 +8,7 @@ class NewTopicForm(forms.ModelForm):
         help_text='Maximale lengte mag niet meer zijn dan 4000 karacters.'
     )
 
+class PostForm(forms.ModelForm):
     class Meta:
-        model = Topic
-        fields = ['subject', 'message']
+        model = Post
+        fields = ['message', ]
