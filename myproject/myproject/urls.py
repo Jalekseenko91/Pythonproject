@@ -17,8 +17,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from accounts import views as accounts_views
-from boards import views
+from ..accounts import views as accounts_views
+from ..boards import views
 
 urlpatterns = [
 
@@ -45,4 +45,8 @@ urlpatterns = [
     url(r'^reset/complete/$',
         auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
         name='password_reset_complete'),
+    url(r'^settings/password/$', auth_views.PasswordChangeView.as_view(template_name='password_change.html'),
+        name='password_change'),
+    url(r'^settings/password/done/$', auth_views.PasswordChangeDoneView.as_view(template_name='password_change_done.html'),
+        name='password_change_done'),
 ]
