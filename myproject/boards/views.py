@@ -6,7 +6,7 @@ from django.views.generic import UpdateView
 from django.utils import timezone
 from .forms import NewTopicForm, PostForm
 from .models import Board, Post, Topic
-
+from django.views.generic import View
 
 def home(request):
     boards = Board.objects.all()
@@ -18,6 +18,19 @@ def board_topics(request, pk):
     topics = board.topics.order_by('-last_updated').annotate(replies=Count('posts'))
     return render(request, 'topics.html', {'board': board, 'topics': topics})
 
+
+class NewPostView(View):
+
+    def post(self, request):
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('post_list')
+        return render(request, 'new_post.html', {'form': form})
+
+    def get(self, request):
+        form = PostForm()
+        return render(request, 'new_post.html', {'form': form})
 
 @login_required
 def new_topic(request, pk):
