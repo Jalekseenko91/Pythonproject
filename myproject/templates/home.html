@@ -14,6 +14,20 @@
         <th>Last Post</th>
       </tr>
     </thead>
+    {% block javascript %}
+    <script>
+          $(document).ready(function(){
+          $("th").click(function(){
+          $("th").animate({
+            down: '250px',
+            opacity: '0.5',
+            height: '150px',
+            width: '150px'
+                  });
+              });
+          });
+</script>
+     {% endblock javascript %}
     <tbody>
       {% for board in boards %}
         <tr>

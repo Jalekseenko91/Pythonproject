@@ -3,6 +3,7 @@ from django.urls import resolve
 from django.urls import reverse
 from django.contrib.auth.models import User
 
+
 from ..views import home, board_topics, new_topic
 from ..models import Board, Topic, Post
 from ..forms import NewTopicForm
@@ -28,7 +29,7 @@ class HomeTests(TestCase):
 
 class BoardTopicsTests(TestCase):
     def setUp(self):
-        Board.objects.create(name='Django', description='Django board.')
+        Board.objects.create(name='SRE2a', description='Software realiseren 2a')
 
     def test_board_topics_view_success_status_code(self):
         url = reverse('board_topics', kwargs={'pk': 1})
@@ -43,6 +44,12 @@ class BoardTopicsTests(TestCase):
     def test_board_topics_url_resolves_board_topics_view(self):
         view = resolve('/boards/1/')
         self.assertEquals(view.func, board_topics)
+
+    def test_board_topics_view_contains_link_back_to_homepage(self):
+        board_topics_url = reverse('board_topics', kwargs={'pk': 1})
+        response = self.client.get(board_topics_url)
+        homepage_url = reverse('home')
+        self.assertContains(response, 'href="{0}"'.format(homepage_url))
 
 
 
@@ -126,3 +133,4 @@ class NewTopicTests(TestCase):
         form = response.context.get('form')
         self.assertEquals(response.status_code, 200)
         self.assertTrue(form.errors)
+
